@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {Fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   Container: {
@@ -6,17 +7,16 @@ export const styles = StyleSheet.create({
     marginTop: '50%',
   },
   input: {
-    height: 28,
+    //height: 28,
     alignSelf: 'center',
     borderBottomWidth: 2,
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: Fonts.size.l,
     borderColor: 'grey',
     marginVertical: 22,
     width: '70%',
-    fontFamily: 'Nunito-Regular',
+    fontFamily: Fonts.family.nunitoRegular,
   },
   buttonView: {
     marginTop: 12,
@@ -38,15 +38,13 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     fontSize: 20,
     color: 'white',
-    fontWeight: 'bold',
-    fontFamily: 'Nunito-Regular',
+    fontFamily: Fonts.family.nunitoRegular,
   },
   ageText: {
     margin: 20,
     alignSelf: 'center',
     fontSize: 20,
     color: 'grey',
-    fontWeight: 'bold',
-    fontFamily: 'Nunito-Regular',
+    fontFamily: Fonts.family.nunitoRegular,
   },
 });
