@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     borderColor: 'grey',
     marginVertical: 22,
     width: '70%',
+    fontFamily: 'Nunito-Regular',
   },
   buttonView: {
     marginTop: 12,
@@ -38,6 +39,7 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: 'Nunito-Regular',
   },
   ageText: {
     margin: 20,
@@ -45,5 +47,6 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: 'grey',
     fontWeight: 'bold',
+    fontFamily: 'Nunito-Regular',
   },
 });
