@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, Text, TextInput, TouchableOpacity, Animated} from 'react-native';
 
 import {styles} from './styles';
 import {clearStorage, readData, storeData} from '../../utils/storage';
 import {AGE_KEY, HEIGHT_KEY} from '../../utils/constant';
 
 const HomeComponent = () => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
   const [age, setAge] = useState('');
 
   const [storeAge, setStoreAge] = useState('');
@@ -17,6 +19,14 @@ const HomeComponent = () => {
   useEffect(() => {
     getLocalData();
   }, []);
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const getLocalData = async () => {
     const a = await readData(AGE_KEY);
@@ -54,7 +64,7 @@ const HomeComponent = () => {
   };
 
   return (
-    <View style={styles.Container}>
+    <Animated.View style={[styles.Container, {opacity: fadeAnim}]}>
       <View style={styles.TextView}>
         <TextInput
           style={styles.input}
@@ -72,9 +82,9 @@ const HomeComponent = () => {
           onChangeText={handleHeight}
         />
         <TouchableOpacity onPress={handleStoreAge}>
-          <View style={styles.buttonView}>
+          <Animated.View style={[styles.buttonView]}>
             <Text style={styles.buttonText}>Store</Text>
-          </View>
+          </Animated.View>
         </TouchableOpacity>
       </View>
       <Text style={styles.ageText}>Your Age is : {storeAge} </Text>
@@ -84,7 +94,7 @@ const HomeComponent = () => {
           <Text style={styles.buttonText}>Clear Age</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
