@@ -4,7 +4,6 @@ import {Fonts} from '../../utils/fonts';
 export const styles = StyleSheet.create({
   Container: {
     flex: 1,
-    marginTop: '50%',
   },
   input: {
     //height: 28,

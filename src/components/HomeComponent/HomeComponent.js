@@ -6,6 +6,7 @@ import {SimpleAnimation} from 'react-native-simple-animations';
 import {styles} from './styles';
 import {clearStorage, readData, storeData} from '../../utils/storage';
 import {AGE_KEY, HEIGHT_KEY} from '../../utils/constant';
+import {useTheme, isDark} from '../../theme/ThemeContext';
 
 const HomeComponent = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -17,10 +18,13 @@ const HomeComponent = () => {
   const [height, setHeight] = useState('');
 
   const [storageH, setStorageH] = useState('');
+  const [dark, setDark] = useState('Turn on Light');
+
+  const {setScheme, isDark, colors} = useTheme();
 
   useEffect(() => {
     getLocalData();
-  }, []);
+  }, [isDark, setScheme]);
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -29,6 +33,16 @@ const HomeComponent = () => {
       useNativeDriver: true,
     }).start();
   }, [fadeAnim]);
+
+  const changeTheme = () => {
+    if (isDark) {
+      setScheme('light');
+      setDark('Turn on Dark');
+    } else {
+      setScheme('dark');
+      setDark('Turn on Light');
+    }
+  };
 
   const getLocalData = async () => {
     const a = await readData(AGE_KEY);
@@ -66,7 +80,11 @@ const HomeComponent = () => {
   };
 
   return (
-    <Animated.View style={[styles.Container, {opacity: fadeAnim}]}>
+    <Animated.View
+      style={[
+        styles.Container,
+        {opacity: fadeAnim, backgroundColor: colors.background},
+      ]}>
       <SimpleAnimation
         delay={50}
         movementType="slide"
@@ -75,10 +93,11 @@ const HomeComponent = () => {
         duration={1000}>
         <View style={styles.TextView}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, {marginTop: 100}]}
             placeholder="Age is just Number!"
             keyboardType={'numeric'}
             value={age}
+            placeholderTextColor={colors.primary}
             onChangeText={onChangeText}
             onSubmitEditing={onSubmitEditing}
           />
@@ -86,6 +105,7 @@ const HomeComponent = () => {
             style={styles.input}
             placeholder="Height matters!"
             keyboardType={'numeric'}
+            placeholderTextColor={colors.primary}
             value={height}
             onChangeText={handleHeight}
           />
@@ -118,6 +138,18 @@ const HomeComponent = () => {
           duration={1000}>
           <View style={styles.buttonView}>
             <Text style={styles.buttonText}>Clear Age</Text>
+          </View>
+        </SimpleAnimation>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={changeTheme}>
+        <SimpleAnimation
+          delay={50}
+          movementType="spring"
+          distance={100}
+          direction="left"
+          duration={1000}>
+          <View style={[styles.buttonView, {backgroundColor: colors.primary}]}>
+            <Text style={[styles.buttonText]}>{dark}</Text>
           </View>
         </SimpleAnimation>
       </TouchableOpacity>
